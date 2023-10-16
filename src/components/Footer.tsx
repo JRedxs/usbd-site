@@ -55,8 +55,8 @@ export default function Footer() {
         <Box
             bg={useColorModeValue('gray.50', 'gray.900')}
             color={useColorModeValue('gray.700', 'gray.200')}
-            position="fixed" /* Utilisez "fixed" pour fixer le pied de page en bas de la fenêtre */
-            bottom="0" /* Le pied de page sera en bas de la fenêtre */
+            position="sticky" 
+            bottom="0" 
             left="0"
             right="0"
         >

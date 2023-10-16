@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 import {
   Box,
@@ -26,6 +26,7 @@ import {
 
 export default function Nav() {
   const { isOpen, onToggle } = useDisclosure()
+  const navigate = useNavigate()
 
   return (
     <Box>
@@ -35,10 +36,14 @@ export default function Nav() {
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
+        borderBottom={0}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}>
+        align={'center'}
+        position="sticky" // or "fixed" to keep it always at the top
+        top="0" // ensures navbar sticks to the top
+        zIndex={10} // ensures navbar is on top of other content
+      >
         <Flex
           flex={{ base: 1, md: 'auto' }}
           ml={{ base: -2 }}
@@ -51,7 +56,7 @@ export default function Nav() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <img src='/img/usbd.png' alt="logo" width={30} height={20}></img> 
+          <img src='/img/usbd.png' alt="logo" width={30} height={20}></img>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -63,7 +68,7 @@ export default function Nav() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
+          <Button as={RouterLink} to="/Login" fontSize={'sm'} fontWeight={400} variant={'link'}>
             Connexion
           </Button>
           <Button
@@ -77,7 +82,7 @@ export default function Nav() {
             _hover={{
               bg: 'green.300',
             }}>
-              Inscription
+            Inscription
           </Button>
         </Stack>
       </Flex>
@@ -186,8 +191,8 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Box
+    <Stack spacing={4}>
+      <Flex
         py={2}
         as="a"
         href={href ?? '#'}
@@ -195,20 +200,23 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         alignItems="center"
         _hover={{
           textDecoration: 'none',
-        }}>
+        }}
+      >
         <Text fontWeight={600} color={useColorModeValue('gray.600', 'gray.200')}>
           {label}
         </Text>
         {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={'all .25s ease-in-out'}
+          <IconButton
+            size="sm"
+            icon={<ChevronDownIcon />}
+            aria-label="Open submenu"
+            variant="ghost"
+            onClick={onToggle}
             transform={isOpen ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
+            transition={'all .25s ease-in-out'}
           />
         )}
-      </Box>
+      </Flex>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
         <Stack
@@ -220,15 +228,14 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           align={'start'}>
           {children &&
             children.map((child) => (
-              <Box as="a" key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Box>
+              <MobileNavItem key={child.label} {...child} />
             ))}
         </Stack>
       </Collapse>
     </Stack>
   )
 }
+
 
 interface NavItem {
   label: string
@@ -282,15 +289,44 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Les Équipes',
     children: [
       {
-        label: 'Equipe exemple',
+        label: 'Catégories Jeunes',
+        children: [
+          {
+            label: 'Sous-Equipe 1',
+            href: '#'
+          },
+          {
+            label: 'Sous-Equipe 2',
+            href: '#'
+          }
+        ]
+      },
+      {
+        label: 'Equipe U8 - U9',
         href: '#'
       },
       {
-        label: 'Equipe exemple',
+        label: 'Equipe U10 - U11',
         href: '#'
       },
       {
-        label: 'Equipe exemple',
+        label: 'Equipe U12 - U13',
+        href: '#'
+      },
+      {
+        label: 'Equipe U14 - U15',
+        href: '#'
+      },
+      {
+        label: 'Equipe U16',
+        href: '#'
+      },
+      {
+        label: 'Equipe à 7',
+        href: '#'
+      },
+      {
+        label: 'Equipe Sénior',
         href: '#'
       },
     ]
