@@ -51,7 +51,7 @@ export default function Nav() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <img src='public/img/usbd.png' width={30} height={20}></img> 
+          <img src='public/img/usbd.png' alt="logo" width={30} height={20}></img> 
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
