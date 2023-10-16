@@ -14,7 +14,7 @@ import { ReactNode } from 'react'
 
 const Logo = (props: any) => {
     return (
-        <img src='src/img/usbd.png' width={70} height={35}></img>
+        <img src='public/img/usbd.png' width={70} height={35}></img>
     )
 }
 
